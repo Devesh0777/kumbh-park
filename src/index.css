@@ -1,0 +1,633 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Design tokens — from nashik-parking-connect-ui-animation-spec.md §1
+   One accent colour only. Status colours are reserved for availability.
+------------------------------------------------------------------- */
+@theme {
+  --color-bg: #faf7f2;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f2ede4;
+  --color-line: #e8e1d6;
+  --color-text: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-accent: #d64545;
+  --color-accent-dark: #b73535;
+  --color-accent-soft: #fbeceb;
+  --color-success: #2e7d46;
+  --color-success-soft: #eaf4ee;
+  --color-warning: #d68a00;
+  --color-warning-soft: #fdf3e2;
+  --color-danger: #c62828;
+  --color-danger-soft: #fbeaea;
+
+  --radius-card: 16px;
+  --radius-sheet: 20px;
+
+  --shadow-card: 0 2px 12px rgb(0 0 0 / 0.06);
+  --shadow-card-hover: 0 6px 20px rgb(0 0 0 / 0.1);
+  --shadow-sheet: 0 -4px 24px rgb(0 0 0 / 0.12);
+  --shadow-pill: 0 2px 10px rgb(0 0 0 / 0.12);
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-heading: 'Lexend', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+  --animate-pulse-dot: pulse-dot 1.6s ease-in-out infinite;
+  --animate-sheet-in: sheet-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-in: fade-in 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-pop-in: pop-in 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-step-in: step-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-step-back: step-back 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-check: check-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgb(214 138 0 / 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgb(214 138 0 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(214 138 0 / 0);
+  }
+}
+
+@keyframes pulse-dot-accent {
+  0% {
+    box-shadow: 0 0 0 0 rgb(214 69 69 / 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgb(214 69 69 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(214 69 69 / 0);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes step-back {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes check-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------- */
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  /* Kill the iOS/Android blue flash on buttons and inputs */
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: transparent;
+  }
+
+  /* Safe area padding for the sticky CTA + bottom nav */
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .bottom-safe {
+    bottom: max(0px, env(safe-area-inset-bottom));
+  }
+  .pt-safe {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+}
+
+@layer components {
+  /* Scroll-triggered reveal — spec §3.2 */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.5s var(--ease-out-expo),
+      transform 0.5s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 80ms);
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+
+  /* Hide scrollbar on horizontal chip rails but keep scrolling */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-shadow {
+    box-shadow: var(--shadow-card);
+  }
+  .sheet-shadow {
+    box-shadow: var(--shadow-sheet);
+  }
+
+  /* Result cards: fade/slide in with a 40ms stagger on first load only (spec §4) */
+  .card-enter {
+    animation: card-in 0.32s var(--ease-out-expo) both;
+    animation-delay: var(--d, 0ms);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Leaflet overrides
+------------------------------------------------------------------- */
+.leaflet-container {
+  background: #efe9df;
+  font-family: var(--font-sans);
+  z-index: 0;
+}
+
+.leaflet-control-attribution {
+  font-size: 9px;
+  background: rgb(255 255 255 / 0.75) !important;
+  color: var(--color-muted);
+}
+
+.leaflet-control-attribution a {
+  color: var(--color-muted);
+}
+
+.leaflet-bar {
+  border: none !important;
+  box-shadow: var(--shadow-pill) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.leaflet-bar a {
+  color: var(--color-text) !important;
+  border-bottom-color: var(--color-line) !important;
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+}
+
+/* Scale bar — Leaflet's default is a hard black-on-white box that fights the
+   soft palette, so it borrows the app's surface/line tokens instead. */
+.leaflet-control-scale {
+  border: none !important;
+  box-shadow: var(--shadow-pill) !important;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px !important;
+  margin-left: 8px !important;
+}
+
+.leaflet-control-scale-line {
+  border: 1.5px solid var(--color-line) !important;
+  border-top: none !important;
+  background: rgb(255 255 255 / 0.85) !important;
+  color: var(--color-muted) !important;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 1px 5px;
+}
+
+/* Price pill marker */
+.pin {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-line);
+  box-shadow: var(--shadow-pill);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  transform: translate(-50%, -100%);
+  transition:
+    transform 0.18s var(--ease-out-expo),
+    background-color 0.18s var(--ease-out-expo),
+    border-color 0.18s var(--ease-out-expo),
+    color 0.18s var(--ease-out-expo);
+  animation: pop-in 0.2s var(--ease-out-expo);
+}
+
+.pin::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+  border-right: 1.5px solid var(--color-line);
+  border-bottom: 1.5px solid var(--color-line);
+  transform: translateX(-50%) rotate(45deg);
+  border-bottom-right-radius: 3px;
+}
+
+.pin--available {
+  border-color: var(--color-success);
+}
+.pin--filling {
+  border-color: var(--color-warning);
+}
+.pin--full {
+  border-color: var(--color-danger);
+  opacity: 0.75;
+}
+.pin--selected {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  transform: translate(-50%, -100%) scale(1.08);
+  z-index: 500;
+}
+.pin--selected::after {
+  border-color: var(--color-accent);
+}
+
+/* Cluster bubble */
+.cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  border: 2px solid rgb(255 255 255 / 0.9);
+  box-shadow: var(--shadow-pill);
+  animation: pop-in 0.2s var(--ease-out-expo);
+  transition: transform 0.18s var(--ease-out-expo);
+}
+
+.cluster:hover {
+  transform: scale(1.06);
+}
+
+/* Ghat / zone label */
+.zone-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgb(26 26 26 / 0.82);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+
+.ghat-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6ba8ff;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.6);
+}
+
+/* Marker fade when merging into a cluster */
+.marker-fade {
+  opacity: 0;
+  transition: opacity 0.15s linear;
+}
+
+/* MarkerClusterPlugin hides its own stylesheet, re-add the essentials */
+.marker-cluster-hidden {
+  display: none;
+}
+
+.cluster-wrap,
+.pin-wrap,
+.label-wrap {
+  background: none;
+  border: none;
+}
+
+/* City-overlay legend, ported from nashik-monitor's layer list. */
+.map-layer-panel {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 500;
+  width: 236px;
+  max-width: calc(100% - 24px);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: rgb(255 255 255 / 0.96);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(4px);
+}
+
+.map-layer-scroll {
+  max-height: min(50vh, 320px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.map-layer-swatch {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  box-shadow:
+    0 0 0 1.5px rgb(255 255 255 / 0.9),
+    0 0 0 2.5px rgb(0 0 0 / 0.08);
+}
+
+/* ------------------------------------------------------------------
+   Nashik Monitor Popups & Interactive Components
+------------------------------------------------------------------- */
+.maplibregl-popup-content {
+  padding: 0 !important;
+  border-radius: 16px !important;
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.2), 0 2px 8px -1px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid var(--color-line) !important;
+  overflow: hidden !important;
+  font-family: var(--font-sans) !important;
+}
+
+.maplibregl-popup-close-button {
+  font-size: 16px !important;
+  color: var(--color-muted) !important;
+  padding: 6px 10px !important;
+  border-radius: 0 16px 0 8px !important;
+  transition: all 0.15s ease !important;
+}
+.maplibregl-popup-close-button:hover {
+  background: var(--color-surface-sunken) !important;
+  color: var(--color-text) !important;
+}
+
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+  border-top-color: var(--color-surface) !important;
+}
+.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+  border-bottom-color: var(--color-surface) !important;
+}
+
+.nm-popup {
+  padding: 14px 16px 12px;
+  max-width: 320px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.nm-popup-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-text);
+  padding-right: 18px;
+}
+
+.nm-popup-layer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 5px 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nm-popup-summary {
+  margin: 6px 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-text);
+  background: var(--color-surface-sunken);
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.nm-popup-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1b8347;
+}
+
+.nm-popup-warn {
+  margin: 6px 0;
+  padding: 6px 8px;
+  background: #fff8eb;
+  border-left: 3px solid #d68a00;
+  color: #8c5b00;
+  font-size: 11px;
+  line-height: 1.35;
+  border-radius: 0 6px 6px 0;
+}
+
+.nm-popup-note {
+  margin: 6px 0;
+  padding: 6px 8px;
+  background: #f4f6fa;
+  border-left: 3px solid #474f93;
+  color: #3b427b;
+  font-size: 11px;
+  line-height: 1.35;
+  border-radius: 0 6px 6px 0;
+}
+
+.nm-popup-table {
+  margin: 8px 0 4px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  font-size: 11px;
+  border-top: 1px solid var(--color-line);
+  padding-top: 8px;
+}
+.nm-popup-table dt {
+  color: var(--color-muted);
+  font-weight: 500;
+}
+.nm-popup-table dd {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+}
+
+.nm-popup-source {
+  margin: 8px 0 0;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-line);
+  font-size: 10px;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* Notice Toast */
+.nm-notice-banner {
+  animation: pop-in 0.25s var(--ease-out-expo);
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion — spec §3.1
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .skeleton,
+  .live-dot,
+  .animate-shimmer,
+  .animate-pulse-dot {
+    animation: none !important;
+  }
+
+  .pin,
+  .cluster {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .sheet,
+  .sheet-backdrop {
+    transition-duration: 0.01ms !important;
+  }
+}
