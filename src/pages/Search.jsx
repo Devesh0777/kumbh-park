@@ -5,6 +5,7 @@ import { useApp } from '@/context/AppContext'
 import { useAsync } from '@/hooks/useAsync'
 import { useDebouncedValue } from '@/hooks/useDebouncedValue'
 import { NASHIK_CENTER } from '@/config/map'
+import { cn } from '@/lib/cn'
 import { PageShell } from '@/components/layout/PageShell'
 import KumbhMap from '@/components/map/KumbhMap'
 import MapLayerToggle, { DEFAULT_OVERLAY_IDS } from '@/components/map/MapLayerToggle'
@@ -18,9 +19,9 @@ import { EmptyState, ErrorState } from '@/components/ui/Feedback'
 import { useToast } from '@/components/ui/Toast'
 
 const QUICK_FILTERS = [
-  { id: 'instant', label: 'Instant book' },
-  { id: 'onlyAvailable', label: 'Hiding full' },
-  { id: 'openNow', label: 'Open now' },
+  { id: 'instant', label: 'Instant QR' },
+  { id: 'onlyAvailable', label: 'Open Bays Only' },
+  { id: 'openNow', label: 'Open Now' },
   { id: 'covered', label: 'Covered' },
   { id: 'gated', label: 'Gated' },
 ]
@@ -37,9 +38,7 @@ export default function Search() {
   const [overlayIds, setOverlayIds] = useState(DEFAULT_OVERLAY_IDS)
   const cardRefs = useRef(new Map())
 
-  // Reads the zone/q deep link exactly once. The ref guard is what makes this
-  // survive StrictMode's mount -> unmount -> mount cycle without patching a
-  // second time and kicking off a duplicate fetch.
+  // Reads the zone/q deep link exactly once
   const appliedDeepLink = useRef(false)
   useEffect(() => {
     if (appliedDeepLink.current) return
@@ -53,15 +52,6 @@ export default function Search() {
   const { data: zones } = useAsync(() => getZones(), [])
   const { data: ghats } = useAsync(() => getGhatPoints(), [])
 
-  // Drive the refetch off the filter *values*, not the `filters` object.
-  // patchFilters always allocates a new object, so depending on identity
-  // re-runs the search on every unrelated provider render.
-  //
-  // The query is debounced for the same reason: the input patches filters on
-  // every keystroke, and each patch would otherwise cancel the in-flight
-  // search and restart it, pinning the skeleton on for as long as typing
-  // continues. The input itself stays controlled by the live value, so the
-  // field still feels instant.
   const debouncedQuery = useDebouncedValue(filters.q)
 
   const filterKey = [
@@ -82,7 +72,6 @@ export default function Search() {
     [filterKey],
   )
 
-  // Stagger ties to a new result set, never to scrolling (spec §4).
   useEffect(() => {
     if (!spots) return
     const timer = setTimeout(() => setStagger(true), 40)
@@ -101,7 +90,7 @@ export default function Search() {
     return count
   }, [filters])
 
-  const zoneLabel = zones?.find((z) => z.id === filters.zone)?.name ?? 'All mela zones'
+  const zoneLabel = zones?.find((z) => z.id === filters.zone)?.name ?? 'All Mela Sectors'
 
   const focus = useMemo(() => {
     if (filters.zone === 'all') return null
@@ -131,17 +120,19 @@ export default function Search() {
   const searchThisArea = () => {
     toast.push({
       tone: 'info',
-      title: 'Area updated',
-      message: 'Showing the closest 20 spots around the map centre.',
+      title: 'Sector Updated',
+      message: 'Showing verified parking spots around current map center.',
     })
     reload()
   }
 
   return (
     <PageShell className="lg:pb-0">
-      <div className="lg:grid lg:h-[calc(100dvh-3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(400px,44%)]">
-        {/* ------------------------------- map pane ------------------------------ */}
-        <section className="relative order-1 h-[44dvh] shrink-0 lg:order-2 lg:h-full">
+      <div className="lg:grid lg:h-[calc(100dvh-4rem)] lg:grid-cols-[minmax(0,1fr)_minmax(420px,46%)]">
+        {/* =========================================================================
+            MAP TELEMETRY PANE (DOMINANT RIGHT COLUMN ON DESKTOP)
+        ========================================================================= */}
+        <section className="relative order-1 h-[45dvh] shrink-0 lg:order-2 lg:h-full border-b lg:border-b-0 lg:border-l border-[#E8E1D6]">
           <KumbhMap
             spots={spots ?? []}
             ghatPoints={ghats ?? []}
@@ -159,20 +150,23 @@ export default function Search() {
             <button
               type="button"
               onClick={searchThisArea}
-              className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full bg-text px-4 py-2 text-[12px] font-semibold text-white card-shadow transition-transform duration-200 [transition-timing-function:var(--ease-out-expo)] active:scale-[0.97]"
+              className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-[#111923] px-4 py-2 text-[12px] font-bold text-white shadow-xl hover:bg-[#005A36] transition-all active:scale-95 border border-white/20"
             >
               <Icon name="refresh" size={14} />
-              Search this area
+              <span>Search This Sector Area</span>
             </button>
           </div>
         </section>
 
-        {/* ------------------------------- list pane ------------------------------ */}
-        <section className="order-2 flex min-h-0 flex-col lg:order-1 lg:h-full">
-          <div className="sticky top-0 z-[500] border-b border-line bg-bg/94 pt-safe backdrop-blur-sm">
-            <div className="flex items-center gap-2 px-4 py-3">
-              <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-2.5 transition-transform duration-200 [transition-timing-function:var(--ease-out-expo)] focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/15 active:scale-[1.02]">
-                <Icon name="search" size={17} className="shrink-0 text-muted" />
+        {/* =========================================================================
+            SIGNAGE LISTING PANE (LEFT COLUMN ON DESKTOP)
+        ========================================================================= */}
+        <section className="order-2 flex min-h-0 flex-col lg:order-1 lg:h-full bg-[#FAF7F2]">
+          {/* Top Search & Filter Bar */}
+          <div className="sticky top-0 z-[500] border-b border-[#E8E1D6] bg-[#FAF7F2]/98 pt-safe backdrop-blur-md">
+            <div className="flex items-center gap-2 px-3.5 py-2.5">
+              <div className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-[#E8E1D6] bg-white px-3 py-2 transition-all focus-within:border-[#005A36] focus-within:ring-2 focus-within:ring-[#005A36]/20 shadow-2xs">
+                <Icon name="search" size={15} className="shrink-0 text-[#005A36]" />
                 <input
                   value={filters.q}
                   onChange={(event) => {
@@ -184,17 +178,17 @@ export default function Search() {
                       return next
                     })
                   }}
-                  placeholder="Where are you headed?"
-                  className="min-w-0 flex-1 bg-transparent text-[15px] placeholder:text-muted/70 focus:outline-none"
+                  placeholder="Where are you headed? (e.g. Ramkund, Panchavati...)"
+                  className="min-w-0 flex-1 bg-transparent text-[13.5px] font-bold text-[#111B27] placeholder:text-[#6B6B6B]/70 focus:outline-none"
                 />
                 {filters.q && (
                   <button
                     type="button"
                     onClick={() => patchFilters({ q: '' })}
                     aria-label="Clear search"
-                    className="grid size-6 shrink-0 place-items-center rounded-full text-muted hover:bg-surface-sunken"
+                    className="grid size-5 shrink-0 place-items-center rounded-full text-[#6B6B6B] hover:bg-[#F2EDE4]"
                   >
-                    <Icon name="x" size={14} />
+                    <Icon name="x" size={13} />
                   </button>
                 )}
               </div>
@@ -203,19 +197,28 @@ export default function Search() {
                 type="button"
                 onClick={() => setFilterOpen(true)}
                 aria-label="Filters"
-                className="relative grid size-11 shrink-0 place-items-center rounded-full bg-text text-white transition-transform duration-200 [transition-timing-function:var(--ease-out-expo)] active:scale-[0.97]"
+                className="relative grid size-9.5 shrink-0 place-items-center rounded-xl bg-[#006B4F] text-white transition-transform active:scale-95 shadow-xs border border-white/30 cursor-pointer"
               >
-                <Icon name="sliders" size={19} />
+                <Icon name="sliders" size={16} />
                 {activeCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 grid size-5 place-items-center rounded-full bg-accent text-[10px] font-bold text-white ring-2 ring-bg">
+                  <span className="absolute -top-1 -right-1 grid size-4.5 place-items-center rounded-full bg-[#E9A83A] text-[9.5px] font-mono font-black text-[#17212B] ring-1.5 ring-white">
                     {activeCount}
                   </span>
                 )}
               </button>
             </div>
 
-            <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 pb-3">
-              <Chip active={filters.zone !== 'all'} onClick={() => setFilterOpen(true)} icon={<Icon name="pin" size={14} />}>
+            {/* Quick Filter Rails */}
+            <div className="no-scrollbar flex gap-1.5 overflow-x-auto px-3.5 pb-2.5">
+              <Chip
+                active={filters.zone !== 'all'}
+                onClick={() => setFilterOpen(true)}
+                icon={<Icon name="pin" size={12} />}
+                className={cn(
+                  'font-bold text-[11.5px] py-1.5 px-3 rounded-lg transition-all',
+                  filters.zone !== 'all' ? 'bg-[#006B4F] border-[#006B4F] text-white' : 'bg-white border-[#E2DDD3] text-[#17212B]',
+                )}
+              >
                 {zoneLabel}
               </Chip>
               {QUICK_FILTERS.map((item) => {
@@ -224,7 +227,15 @@ export default function Search() {
                     ? filters[item.id]
                     : filters.features.includes(item.id === 'gated' ? 'gate' : item.id)
                 return (
-                  <Chip key={item.id} active={Boolean(active)} onClick={() => toggleQuick(item.id)}>
+                  <Chip
+                    key={item.id}
+                    active={Boolean(active)}
+                    onClick={() => toggleQuick(item.id)}
+                    className={cn(
+                      'font-bold text-[11.5px] py-1.5 px-3 rounded-lg transition-all',
+                      active ? 'bg-[#006B4F] border-[#006B4F] text-white' : 'bg-white border-[#E2DDD3] text-[#17212B]',
+                    )}
+                  >
                     {item.label}
                   </Chip>
                 )
@@ -232,23 +243,30 @@ export default function Search() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-3 px-4 py-3">
-            <p className="text-[13px] font-semibold">
-              {loading ? 'Finding spots…' : `${spots?.length ?? 0} spots`}
-              <span className="ml-1.5 font-normal text-muted">· {zoneLabel}</span>
-            </p>
+          {/* Operational Header with Listing Count & Sort Access */}
+          <div className="flex items-center justify-between gap-3 px-3.5 py-2 border-b border-[#E2DDD3] bg-[#F7F3EA]">
+            <div>
+              <span className="text-[11.5px] font-mono font-black uppercase text-[#17212B] block leading-tight">
+                {loading ? 'CALIBRATING SPOTS…' : `${spots?.length ?? 0} PARKING SPOTS`}
+              </span>
+              <span className="text-[9.5px] font-bold text-[#006B4F] uppercase tracking-wider block">
+                NASHIK • KUMBH 2027
+              </span>
+            </div>
+
             {spots?.length > 0 && (
               <button
                 type="button"
                 onClick={() => setFilterOpen(true)}
-                className="text-[12px] font-semibold text-accent"
+                className="text-[11.5px] font-bold text-[#E9A83A] hover:underline cursor-pointer"
               >
-                Sort & filters
+                SORT & FILTERS →
               </button>
             )}
           </div>
 
-          <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 pb-24 lg:pb-8">
+          {/* Compact List of Distinct Kumbh Park Parking Signs */}
+          <div className="min-h-0 flex-1 space-y-2.5 overflow-y-auto p-3 pb-24 lg:pb-8">
             {loading && (
               <>
                 {[0, 1, 2, 3].map((key) => (
@@ -262,15 +280,15 @@ export default function Search() {
             {!loading && !error && spots?.length === 0 && (
               <EmptyState
                 icon="pin"
-                title="No spots match these filters"
-                message="Ramkund fills by 7 am on mela days. Try Trimbakeshwar, or relax the filters."
+                title="No parking signs match these filters"
+                message="Ramkund fills early during Shahi Snan dates. Try Trimbakeshwar or relax your filter settings."
                 action={
                   <Button
                     onClick={() =>
                       patchFilters({ features: [], onlyAvailable: false, instant: false, maxPrice: null })
                     }
                   >
-                    Relax filters
+                    Reset Filter Settings
                   </Button>
                 }
               />
@@ -297,14 +315,14 @@ export default function Search() {
             ))}
 
             {!loading && spots?.length > 0 && (
-              <p className="py-6 text-center text-[12px] text-muted">
-                That is every spot matching your filters.{' '}
+              <p className="py-6 text-center text-[12px] text-[#6B6B6B]">
+                You have reached the end of verified spots for this sector.{' '}
                 <button
                   type="button"
-                  className="font-semibold text-accent"
+                  className="font-bold text-[#D9483B] hover:underline ml-1 cursor-pointer"
                   onClick={() => navigate('/host/new')}
                 >
-                  List your parking?
+                  List your compound?
                 </button>
               </p>
             )}

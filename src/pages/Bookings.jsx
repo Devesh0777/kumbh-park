@@ -15,6 +15,7 @@ import { SegmentedTabs, TextLink } from '@/components/ui/Chip'
 import Sheet from '@/components/ui/Sheet'
 import { EmptyState, ErrorState } from '@/components/ui/Feedback'
 import { useToast } from '@/components/ui/Toast'
+import DigitalParkingTicket from '@/components/booking/DigitalParkingTicket'
 
 import QRScannerModal from '@/components/qr/QRScannerModal'
 
@@ -68,15 +69,31 @@ export default function Bookings() {
         title="My bookings"
         subtitle="Pilgrim passes, QR check-in and past stays"
         action={
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => setIsScannerOpen(true)}
-            className="flex items-center gap-1.5 shadow-md"
-          >
-            <Icon name="qr" size={16} />
-            Scan Spot QR
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                if (groups.active.length > 0) {
+                  setQrFor(groups.active[0])
+                } else if (data && data.length > 0) {
+                  setQrFor(data[0])
+                }
+              }}
+              className="bg-amber-50 hover:bg-amber-100 text-[#8B5A2B] border border-amber-300 font-bold flex items-center gap-1"
+            >
+              <span>▶ Run Demo</span>
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => setIsScannerOpen(true)}
+              className="flex items-center gap-1.5 shadow-md bg-[#006B4F]"
+            >
+              <Icon name="qr" size={16} />
+              Scan Spot QR
+            </Button>
+          </div>
         }
       />
 
@@ -222,25 +239,19 @@ export default function Bookings() {
       <Sheet
         open={Boolean(qrFor)}
         onClose={() => setQrFor(null)}
-        title="Gate pass"
+        title="Digital Parking Ticket"
         subtitle={qrFor ? `${qrFor.code} · ${qrFor.plate}` : ''}
-        height="auto"
+        height="tall"
+        width="wide"
       >
         {qrFor && (
-          <div className="flex flex-col items-center gap-3 pt-1 pb-2 text-center">
-            <QRCode value={qrPayload(qrFor)} size={200} />
-            <div>
-              <p className="text-[11px] font-semibold tracking-[0.14em] text-muted uppercase">Show this to the host</p>
-              <p className="text-[28px] leading-tight font-bold tracking-[0.3em] text-accent">{qrFor.pin}</p>
-            </div>
-            <div className="w-full rounded-[14px] bg-surface-sunken p-3.5 text-left">
-              <p className="text-[14px] font-semibold">{qrFor.title}</p>
-              <p className="mt-1 text-[12px] text-muted">{qrFor.address}</p>
-              <p className="mt-2 text-[12px] text-muted">
-                {dateTime(qrFor.startISO)} → {time(qrFor.endISO)}
-              </p>
-            </div>
-            <TextLink icon={<Icon name="share" size={14} />}>Share pass</TextLink>
+          <div className="pb-6">
+            <DigitalParkingTicket
+              booking={qrFor}
+              spot={qrFor}
+              onClose={() => setQrFor(null)}
+              showActions={true}
+            />
           </div>
         )}
       </Sheet>
@@ -257,7 +268,7 @@ export default function Bookings() {
             <Button variant="outline" full size="lg" onClick={() => setCancelling(null)}>
               Keep it
             </Button>
-            <Button variant="primary" full size="lg" onClick={doCancel}>
+            <Button variant="danger" full size="lg" onClick={doCancel}>
               Cancel booking
             </Button>
           </div>

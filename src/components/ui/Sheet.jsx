@@ -20,6 +20,7 @@ export default function Sheet({
   footer,
   side = 'bottom',
   height = 'auto',
+  width = 'default',
   hideClose = false,
   className,
 }) {
@@ -89,9 +90,13 @@ export default function Sheet({
         className={cn(
           'relative z-10 flex flex-col w-full bg-surface border border-line shadow-2xl overflow-hidden',
           // Mobile: bottom sheet
-          'rounded-t-[24px] max-h-[90dvh]',
-          // Desktop: centered floating modal
-          'md:max-w-[540px] md:rounded-[24px] md:max-h-[85vh]',
+          'rounded-t-[24px] max-h-[92dvh]',
+          // Desktop: centered floating modal with configurable width
+          width === 'wide'
+            ? 'md:max-w-[880px] lg:max-w-[920px] md:rounded-[26px] md:max-h-[90vh]'
+            : width === 'xl'
+              ? 'md:max-w-[1040px] md:rounded-[26px] md:max-h-[90vh]'
+              : 'md:max-w-[540px] md:rounded-[24px] md:max-h-[85vh]',
           side === 'right' && 'md:max-w-[440px] md:h-[calc(100vh-2rem)] md:rounded-l-[24px] md:rounded-r-none md:ml-auto',
           className,
         )}
@@ -112,7 +117,7 @@ export default function Sheet({
           <header className="flex shrink-0 items-start justify-between gap-3 px-6 py-4 border-b border-line bg-surface-raised">
             <div className="min-w-0 flex-1">
               {eyebrow && (
-                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-accent mb-0.5">
+                <p className="text-[10.5px] font-mono font-black uppercase tracking-[0.14em] text-[#075B3D] mb-0.5">
                   {eyebrow}
                 </p>
               )}

@@ -2,12 +2,16 @@ import { cn } from '@/lib/cn'
 
 const VARIANTS = {
   primary:
-    'bg-accent text-white shadow-[0_2px_10px_rgba(214,69,69,0.28)] hover:bg-accent-dark active:scale-[0.99] disabled:bg-accent/45 disabled:shadow-none',
-  dark: 'bg-text text-white hover:bg-black active:scale-[0.99] disabled:bg-text/40',
-  outline: 'border border-line bg-surface text-text hover:border-text/25 active:scale-[0.99]',
-  ghost: 'text-text hover:bg-surface-sunken active:scale-[0.99]',
-  soft: 'bg-accent-soft text-accent hover:bg-accent-soft/70 active:scale-[0.99]',
-  neutral: 'bg-surface-sunken text-text hover:bg-line/70 active:scale-[0.99]',
+    'bg-[#E9A83A] text-[#17212B] font-bold shadow-sm hover:bg-[#DC9B2E] active:scale-[0.99] disabled:bg-[#E9A83A]/45 disabled:shadow-none',
+  brand:
+    'bg-[#006B4F] text-white font-bold shadow-sm hover:bg-[#00543E] active:scale-[0.99] disabled:bg-[#006B4F]/45 disabled:shadow-none',
+  dark: 'bg-[#17212B] text-white hover:bg-black active:scale-[0.99] disabled:bg-[#17212B]/40',
+  outline: 'border border-[#E2DDD3] bg-white text-[#17212B] hover:bg-[#FAF7F2] active:scale-[0.99]',
+  ghost: 'text-[#17212B] hover:bg-[#FAF7F2] active:scale-[0.99]',
+  soft: 'bg-[#FFF5DF] text-[#B47C10] hover:bg-[#FFEEC5] active:scale-[0.99]',
+  softGreen: 'bg-[#EAF2EC] text-[#006B4F] hover:bg-[#DDECE0] active:scale-[0.99]',
+  danger: 'bg-[#D96B5F] text-white font-bold hover:bg-[#C85B4F] active:scale-[0.99]',
+  neutral: 'bg-[#FAF7F2] text-[#17212B] border border-[#E2DDD3] hover:bg-[#EAF2EC] active:scale-[0.99]',
 }
 
 const SIZES = {

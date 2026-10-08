@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { fallbackIllustrationUri, photoUri } from '@/lib/photo'
 
-/** Photo with automatic offline/network error fallback. */
+/** Photo with automatic offline/network error fallback and cohesive tone grading. */
 export default function Photo({
   src,
   seed = 'spot',
@@ -42,10 +42,12 @@ export default function Photo({
         onError={handleError}
         onLoad={() => setLoaded(true)}
         className={cn(
-          'size-full object-cover transition-opacity duration-300',
+          'size-full object-cover transition-all duration-300 contrast-[1.03] saturate-[0.9] brightness-[0.96]',
           loaded ? 'opacity-100' : 'opacity-80'
         )}
       />
+      {/* Subtle warm architectural grade overlay to unify photo color balance */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent mix-blend-multiply" />
       {children}
     </div>
   )

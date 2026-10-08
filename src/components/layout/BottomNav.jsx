@@ -31,8 +31,8 @@ export default function BottomNav() {
               end={tab.end}
               className={({ isActive }) =>
                 cn(
-                  'flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-semibold transition-colors',
-                  isActive ? 'text-accent' : 'text-muted',
+                  'flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-bold transition-colors',
+                  isActive ? 'text-[#006B4F]' : 'text-[#66706B] hover:text-[#17212B]',
                 )
               }
             >
@@ -41,10 +41,10 @@ export default function BottomNav() {
                   <span
                     className={cn(
                       'grid h-7 w-12 place-items-center rounded-full transition-colors duration-200',
-                      isActive ? 'bg-accent-soft' : '',
+                      isActive ? 'bg-[#EAF2EC] text-[#006B4F]' : '',
                     )}
                   >
-                    <Icon name={tab.icon} size={19} strokeWidth={isActive ? 2.2 : 1.8} />
+                    <Icon name={tab.icon} size={19} strokeWidth={isActive ? 2.3 : 1.8} />
                   </span>
                   {tab.label}
                 </>

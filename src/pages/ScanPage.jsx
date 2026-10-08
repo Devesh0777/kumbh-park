@@ -22,7 +22,7 @@ export default function ScanPage() {
         </div>
 
         <div className="space-y-2">
-          <h3 className="text-xl font-bold text-ink">ParkShare Spot Scanner</h3>
+          <h3 className="text-xl font-bold text-ink">Kumbh Park Spot Scanner</h3>
           <p className="text-sm text-muted max-w-md mx-auto">
             Scan the static printed QR code mounted at your reserved parking spot. The system automatically verifies your booking window and processes check-in or check-out.
           </p>

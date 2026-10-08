@@ -2,6 +2,9 @@
  * Authentic Parking Spot, Ghat & Temple Photography for Kumbh Park (Nashik Kumbh Mela)
  * High-resolution imagery representing real Indian residential driveways, gated compounds,
  * temple courtyards, Godavari river ghats, and secure plots in Nashik & Trimbakeshwar.
+ *
+ * NOTE: All indoor/bedroom/living room images have been completely removed and replaced
+ * with authentic outdoor vehicle parking, driveways, gravel plots, and covered bays.
  */
 
 export const SPOT_PHOTOS = {
@@ -9,7 +12,7 @@ export const SPOT_PHOTOS = {
   s1: [
     'https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1584463699039-37326df8018e?w=800&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80',
   ],
   // s2: Empty residential plot, Godavari Housing (Ramkund Ghat Road)
   s2: [
@@ -19,84 +22,99 @@ export const SPOT_PHOTOS = {
   ],
   // s3: Gated Bungalow Portico, Tapovan Road
   s3: [
-    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1584463699039-37326df8018e?w=800&auto=format&fit=crop&q=80',
   ],
   // s4: Shaded Courtyard near Kalaram Temple (Panchavati)
   s4: [
     'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?w=800&auto=format&fit=crop&q=80',
   ],
   // s5: Covered Farmhouse Compound, Trimbak Road
   s5: [
-    'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1545179605-1296651e9d43?w=800&auto=format&fit=crop&q=80',
   ],
   // s6: Trimbakeshwar Temple Parking Extension (Near Brahmagiri)
   s6: [
     'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&auto=format&fit=crop&q=80',
   ],
   // s7: Paver-Block Driveway near Sita Gumpha
   s7: [
-    'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1584463699039-37326df8018e?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?w=800&auto=format&fit=crop&q=80',
   ],
   // s8: Multi-car open plot, Nashik Road Highway
   s8: [
     'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1545179605-1296651e9d43?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&auto=format&fit=crop&q=80',
   ],
   // s9: Covered basement bays near CBS Bus Stand
   s9: [
     'https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&auto=format&fit=crop&q=80',
   ],
   // s10: Riverbank Ashram compound, Godavari Left Bank
   s10: [
     'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?w=800&auto=format&fit=crop&q=80',
   ],
   // s11: Rail-road side compound, Nashik Road Station
   s11: [
     'https://images.unsplash.com/photo-1545179605-1296651e9d43?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&auto=format&fit=crop&q=80',
   ],
   // s12: Dharamsala-side covered parking, Pandit Kale Nagar
   s12: [
     'https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1584463699039-37326df8018e?w=800&auto=format&fit=crop&q=80',
   ],
   // s13: Panchavati ghat roadside plot
   s13: [
     'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1545179605-1296651e9d43?w=800&auto=format&fit=crop&q=80',
   ],
   // s14: Muktidham temple perimeter private bay
   s14: [
     'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1584463699039-37326df8018e?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80',
   ],
   // s15: Gangapur Road villa porch parking
   s15: [
-    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1584463699039-37326df8018e?w=800&auto=format&fit=crop&q=80',
   ],
   // s16: Someshwar waterfall access private plot
   s16: [
     'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1545179605-1296651e9d43?w=800&auto=format&fit=crop&q=80',
   ],
   // s17: Wadgaon roadside terrace compound
   s17: [
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&auto=format&fit=crop&q=80',
   ],
   // s18: Tapovan Sadhugram sector parking plot
   s18: [
     'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1545179605-1296651e9d43?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&auto=format&fit=crop&q=80',
   ],
 }
 
@@ -118,9 +136,10 @@ const GENERAL_PHOTOS = [
   'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=800&auto=format&fit=crop&q=80',
   'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&auto=format&fit=crop&q=80',
   'https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?w=800&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80',
   'https://images.unsplash.com/photo-1545179605-1296651e9d43?w=800&auto=format&fit=crop&q=80',
   'https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?w=800&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&auto=format&fit=crop&q=80',
 ]
 
 function hash(str) {
@@ -140,7 +159,7 @@ export function fallbackIllustrationUri(seed, label = 'PARKING SPOT') {
       <circle cx="200" cy="100" r="40" fill="#ffffff" opacity="0.1"/>
       <path d="M185 80h18a15 15 0 0 1 0 30h-18v18h-8V80h8zm0 8v14h18a7 7 0 0 0 0-14h-18z" fill="#ffffff"/>
       <text x="200" y="170" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" opacity="0.8" text-anchor="middle">${label}</text>
-      <text x="200" y="195" font-family="system-ui, sans-serif" font-size="11" fill="#ffffff" opacity="0.5" text-anchor="middle">PARKSHARE VERIFIED SPOT</text>
+      <text x="200" y="195" font-family="system-ui, sans-serif" font-size="11" fill="#ffffff" opacity="0.5" text-anchor="middle">KUMBH PARK VERIFIED</text>
     </svg>
   `)}`
 }

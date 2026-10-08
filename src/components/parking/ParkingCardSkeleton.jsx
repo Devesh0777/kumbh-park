@@ -1,18 +1,15 @@
 import { Skeleton } from '@/components/ui/Skeleton'
 
-/** Result-card placeholder — matches the final layout so nothing jumps (spec §3.6). */
+/** Result-card placeholder matching the new highway signboard layout */
 export default function ParkingCardSkeleton() {
   return (
-    <div className="flex gap-3 rounded-[var(--radius-card)] bg-surface p-2.5 card-shadow">
-      <Skeleton className="aspect-square w-[104px] shrink-0 sm:w-[132px]" rounded="rounded-[12px]" />
-      <div className="flex min-w-0 flex-1 flex-col gap-2 py-0.5">
-        <Skeleton className="h-3.5 w-4/5" rounded="rounded-full" />
-        <Skeleton className="h-3 w-3/5" rounded="rounded-full" />
-        <Skeleton className="h-3 w-2/5" rounded="rounded-full" />
-        <div className="mt-auto flex items-end justify-between">
-          <Skeleton className="h-3 w-24" rounded="rounded-full" />
-          <Skeleton className="h-4 w-16" rounded="rounded-full" />
-        </div>
+    <div className="flex flex-col gap-2 rounded-xl border border-[#E8E1D6] bg-white p-2.5 shadow-2xs">
+      {/* Compact Signboard Placeholder */}
+      <Skeleton className="h-20 w-full" rounded="rounded-lg" />
+      {/* Footer Placeholder */}
+      <div className="flex items-center justify-between pt-1 border-t border-[#E8E1D6]/60">
+        <Skeleton className="h-3.5 w-1/3" rounded="rounded" />
+        <Skeleton className="h-6 w-20" rounded="rounded" />
       </div>
     </div>
   )

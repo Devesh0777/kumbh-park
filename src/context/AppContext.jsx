@@ -1,12 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
-import { currentHost, currentUser } from '@/api/mock/hosts'
+import { currentHost } from '@/api/mock/hosts'
 import { isMock } from '@/api'
 
-/**
- * Tiny app-wide store. Holds the mock session, saved listings and the filter
- * state that has to survive navigation between Search and Listing detail.
- * Replace the bodies with real auth/session calls when the backend lands.
- */
 const AppContext = createContext(null)
 
 export const DEFAULT_FILTERS = {
@@ -22,11 +17,42 @@ export const DEFAULT_FILTERS = {
   sort: 'recommended',
 }
 
+// Default Demo User Account "Devv"
+const DEFAULT_DEMO_USER = {
+  id: 'u_devv',
+  name: 'Devv',
+  initials: 'DV',
+  phone: '+91 98200 12345',
+  email: 'devv@kumbhpark.com',
+  homeZone: 'ramkund',
+  role: 'user',
+  isDemo: true,
+}
+
 export function AppProvider({ children }) {
-  const [user] = useState(() => currentUser)
+  const [userRole, setUserRoleState] = useState('user') // 'user' | 'host' | 'admin'
+  const [user, setUser] = useState(DEFAULT_DEMO_USER)
   const [host] = useState(() => currentHost)
   const [saved, setSaved] = useState(() => new Set(['s6']))
   const [filters, setFilters] = useState(DEFAULT_FILTERS)
+
+  const setUserRole = useCallback((role, userData) => {
+    setUserRoleState(role)
+    if (userData) {
+      setUser((prev) => ({
+        ...prev,
+        ...userData,
+        initials: userData.name
+          ? userData.name
+              .split(' ')
+              .map((n) => n[0])
+              .join('')
+              .toUpperCase()
+          : 'DV',
+        role,
+      }))
+    }
+  }, [])
 
   const toggleSaved = useCallback((spotId) => {
     setSaved((current) => {
@@ -46,6 +72,9 @@ export function AppProvider({ children }) {
   const value = useMemo(
     () => ({
       user,
+      setUser,
+      userRole,
+      setUserRole,
       host,
       saved,
       toggleSaved,
@@ -55,7 +84,7 @@ export function AppProvider({ children }) {
       resetFilters,
       isMock,
     }),
-    [user, host, saved, toggleSaved, filters, patchFilters, resetFilters],
+    [user, userRole, setUserRole, host, saved, toggleSaved, filters, patchFilters, resetFilters],
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

@@ -5,20 +5,23 @@
    One accent colour only. Status colours are reserved for availability.
 ------------------------------------------------------------------- */
 @theme {
-  --color-bg: #faf7f2;
+  --color-bg: #f7f3ea;
   --color-surface: #ffffff;
-  --color-surface-sunken: #f2ede4;
-  --color-line: #e8e1d6;
-  --color-text: #1a1a1a;
-  --color-muted: #6b6b6b;
-  --color-accent: #d64545;
-  --color-accent-dark: #b73535;
-  --color-accent-soft: #fbeceb;
-  --color-success: #2e7d46;
-  --color-success-soft: #eaf4ee;
-  --color-warning: #d68a00;
-  --color-warning-soft: #fdf3e2;
-  --color-danger: #c62828;
+  --color-surface-sunken: #eaf2ec;
+  --color-line: #e2ddd3;
+  --color-text: #17212b;
+  --color-muted: #66706b;
+  --color-accent: #e9a83a;
+  --color-accent-dark: #dc9b2e;
+  --color-accent-soft: #fff5df;
+  --color-brand: #006b4f;
+  --color-brand-dark: #00543e;
+  --color-brand-soft: #eaf2ec;
+  --color-success: #006b4f;
+  --color-success-soft: #eaf2ec;
+  --color-warning: #e9a83a;
+  --color-warning-soft: #fff8e7;
+  --color-danger: #d96b5f;
   --color-danger-soft: #fbeaea;
 
   --radius-card: 16px;
@@ -42,6 +45,78 @@
   --animate-step-in: step-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   --animate-step-back: step-back 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   --animate-check: check-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-qr-pulse: qr-pulse 2s ease-in-out infinite;
+  --animate-badge-glow: badge-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes qr-box-1 {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes qr-box-2 {
+  0%, 20% { transform: scale(0); opacity: 0; }
+  75% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes qr-box-3 {
+  0%, 40% { transform: scale(0); opacity: 0; }
+  85% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes qr-box-4 {
+  0%, 60% { transform: scale(0); opacity: 0; }
+  95% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes badge-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 72, 59, 0); }
+  50% { box-shadow: 0 0 0 5px rgba(217, 72, 59, 0.18); }
+}
+
+@keyframes stamp-pop {
+  0% {
+    transform: scale(2.2) rotate(-6deg);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(0.95) rotate(-2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes ticket-enter {
+  0% {
+    transform: translateY(16px) scale(0.96);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes hang-swing {
+  0% {
+    transform: translateY(-30px) rotate(-1.8deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(4px) rotate(0.8deg);
+    opacity: 1;
+  }
+  85% {
+    transform: translateY(-1px) rotate(-0.3deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
 }
 
 @keyframes shimmer {

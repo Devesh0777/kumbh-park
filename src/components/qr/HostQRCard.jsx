@@ -92,7 +92,7 @@ export default function HostQRCard({ spot }) {
           <div className="h-6 w-6 rounded-md bg-accent flex items-center justify-center text-white font-black text-xs">
             P
           </div>
-          <span className="font-bold text-sm tracking-wide text-ink">ParkShare Spot Pass</span>
+          <span className="font-bold text-sm tracking-wide text-ink">Kumbh Park Spot Pass</span>
         </div>
 
         <div className="mx-auto w-fit rounded-xl bg-white p-4 shadow-md border border-slate-200">
